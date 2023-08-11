@@ -11,7 +11,7 @@ import ModalContrySelected from "./components/ModalContrySelected";
 
 function App() {
   const { isLoading, error, data: allCountries } = useQuery<CountryInfo[]>({
-    // enabled: false,
+    enabled: true,
     refetchOnMount: false,      // Disable refetch on component mount
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
@@ -21,10 +21,12 @@ function App() {
       return await axios.get('https://restcountries.com/v3.1/all')
         .then(data => {
           // return organizeData(data.data)
+          setCountries(data.data)
           return data.data
         })
     }
   })
+
 
   const [theme, setTheme] = useLocalStorage("COUNTRIES_APP_THEMES", 'forest')
 
@@ -33,17 +35,17 @@ function App() {
   const [byName, setByName] = useLocalStorage("COUNTRIES_APP_NAME", "")
   const [countrySelected, setCountrySelected] = useLocalStorage<CountryInfo | undefined>("COUNTRIES_APP_COUTRYSELECTED", undefined)
 
- /*  if (isLoading) {
-    return (
-      <div>LOADING...</div>
-    )
-  }
-
-  if (error || !countries) {
-    return (
-      <div>ERROR</div>
-    )
-  } */
+  /*  if (isLoading) {
+     return (
+       <div>LOADING...</div>
+     )
+   }
+ 
+   if (error || !countries) {
+     return (
+       <div>ERROR</div>
+     )
+   } */
 
   function filterByRegion(regionSelected: string, nameSelected: string) {
     let countriesFiltered = allCountries
@@ -98,7 +100,7 @@ function App() {
       {
         isLoading ?
           <div>
-
+            Loading...
           </div>
           :
           error || !countries ?
