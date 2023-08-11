@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useQuery } from "react-query"
+import { /* isError, */ useQuery } from "react-query"
 import useLocalStorage from "./customHooks/useLocalStorage"
 import NavBar from "./components/NavBar"
 import { CountryInfo } from './types';
@@ -33,7 +33,7 @@ function App() {
   const [byName, setByName] = useLocalStorage("COUNTRIES_APP_NAME", "")
   const [countrySelected, setCountrySelected] = useLocalStorage<CountryInfo | undefined>("COUNTRIES_APP_COUTRYSELECTED", undefined)
 
-  if (isLoading) {
+ /*  if (isLoading) {
     return (
       <div>LOADING...</div>
     )
@@ -43,7 +43,7 @@ function App() {
     return (
       <div>ERROR</div>
     )
-  }
+  } */
 
   function filterByRegion(regionSelected: string, nameSelected: string) {
     let countriesFiltered = allCountries
@@ -95,25 +95,38 @@ function App() {
         theme={theme}
       />
 
-      <ModalContrySelected
-        countrySelected={countrySelected}
-      />
+      {
+        isLoading ?
+          <div>
 
-      <div className="min-h-[86vh] w-full bg-base-300 ">
-        <div className="mx-auto w-[80%] flex flex-col gap-10 pb-10">
-          <SearchDisplay
-            filterByRegion={filterByRegion}
-            region={region}
-            setRegion={setRegion}
-            byName={byName}
-            setByName={setByName}
-          />
-          <CountriesDisplay
-            countries={countries}
-            setCountrySelected={setCountrySelected}
-          />
-        </div>
-      </div>
+          </div>
+          :
+          error || !countries ?
+            <div>Error</div>
+            :
+            <>
+              <ModalContrySelected
+                countrySelected={countrySelected}
+              />
+
+              <div className="min-h-[86vh] w-full bg-base-300 ">
+                <div className="mx-auto w-[80%] flex flex-col gap-10 pb-10">
+                  <SearchDisplay
+                    filterByRegion={filterByRegion}
+                    region={region}
+                    setRegion={setRegion}
+                    byName={byName}
+                    setByName={setByName}
+                  />
+                  <CountriesDisplay
+                    countries={countries}
+                    setCountrySelected={setCountrySelected}
+                  />
+                </div>
+              </div>
+            </>
+      }
+
       <Footer />
     </div>
   )
