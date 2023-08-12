@@ -41,7 +41,6 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
             default:
                 setCountriesPerPage(8)
                 break;
-
         }
     }, [windowWidth])
 

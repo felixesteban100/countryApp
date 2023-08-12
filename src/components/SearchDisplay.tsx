@@ -31,7 +31,7 @@ function SearchDisplay({ filterByRegion, region, setRegion, byName, setByName }:
           setRegion(e.target.value)
           filterByRegion(e.target.value, byName)
         }}
-        className={`select select-primary ${getContinentColor(region)} w-full md:w-[50%]`}
+        className={`select select-primary text-2xl ${getContinentColor(region)} w-full md:w-[50%]`}
       >
         <option className={`${getContinentColor("All")}`}>All</option>
         <option className={`${getContinentColor("Asia")}`}>Asia</option>
