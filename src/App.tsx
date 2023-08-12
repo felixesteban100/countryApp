@@ -52,7 +52,7 @@ function App() {
 
     if (countriesFiltered !== undefined && (regionSelected !== "All" || nameSelected !== "")) {
       if (regionSelected !== "All") {
-        console.log("regionSelected", regionSelected)
+        // console.log("regionSelected", regionSelected)
         countriesFiltered = countriesFiltered.reduce(
           (acc: CountryInfo[], currCountry: CountryInfo) => {
             if (currCountry.continents.includes(regionSelected)) {
@@ -65,7 +65,7 @@ function App() {
       }
 
       if (nameSelected !== "") {
-        console.log("nameSelected", nameSelected)
+        // console.log("nameSelected", nameSelected)
         countriesFiltered = countriesFiltered.reduce(
           (acc: CountryInfo[], currCountry: CountryInfo) => {
             if (currCountry.name.common.toLowerCase().includes(nameSelected.toLowerCase())) {
@@ -77,13 +77,14 @@ function App() {
         )
       }
 
-      console.log("countriesFiltered", countriesFiltered)
+      // console.log("countriesFiltered", countriesFiltered)
 
       setCountries(countriesFiltered)
     } else {
       setCountries(allCountries)
     }
   }
+
 
 
   return (
@@ -99,12 +100,27 @@ function App() {
 
       {
         isLoading ?
-          <div>
-            Loading...
+          <div className="min-h-[86vh] w-full bg-base-300 ">
+            <div className="mx-auto w-[80%] flex flex-col gap-10 pb-10">
+              <div className="w-full flex justify-center items-center pt-10">
+                <p className="animate-textShadowPopBrLoading text-4xl md:text-5xl font-bold">
+                  Loading...
+                </p>
+              </div>
+            </div>
           </div>
           :
           error || !countries ?
-            <div>Error</div>
+
+            <div className="min-h-[86vh] w-full bg-base-300">
+              <div className="mx-auto w-[80%] flex flex-col gap-10 pb-10">
+                <div className="w-full flex justify-center items-center pt-10">
+                  <p className="animate-textShadowPopBr text-4xl md:text-5xl font-bold">
+                    Error
+                  </p>
+                </div>
+              </div>
+            </div>
             :
             <>
               <ModalContrySelected
@@ -128,7 +144,6 @@ function App() {
               </div>
             </>
       }
-
       <Footer />
     </div>
   )

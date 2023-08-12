@@ -10,8 +10,7 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
     const [countriesPerPage, setCountriesPerPage] = useState(8)
     const [visibleResults, setVisibleResults] = useState<CountryInfo[]>(countries.slice(0, countriesPerPage/* simultaneous */))
 
-
-    console.log(windowWidth)
+    // console.log(windowWidth)
 
     useEffect(() => {
         setVisibleResults(countries.slice(0, countriesPerPage))
@@ -30,7 +29,7 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
     }); // No dependency array, so this effect runs on every component render
 
     useEffect(() => {
-        switch(true){
+        switch (true) {
             case windowWidth > 615 && windowWidth < 1110:
                 setCountriesPerPage(4)
                 break;
@@ -39,10 +38,10 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
                 setCountriesPerPage(2)
                 break;
 
-            default: 
+            default:
                 setCountriesPerPage(8)
                 break;
-            
+
         }
     }, [windowWidth])
 
@@ -62,38 +61,54 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
 
     return (
         <>
-            <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-20 ${visibleResults.length > 5 ? "" : visibleResults.length > 3 ? "mb-0 lg:mb-[20rem]" : "mb-0 md:mb-[20rem] lg:mb-[20rem] "}`}>
-                {/* shuffle( */visibleResults/* ) */.map((current: CountryInfo) => {
-                    return (
-                        <label htmlFor="my-modal-countrySelected" onClick={() => setCountrySelected(current)} className="card rounded-md bg-base-100 shadow-xl h-full group/country cursor-pointer" key={current.name.common}>
-                            <figure className="w-full h-44 object-contain">
-                                <img className="w-full h-full object-cover" src={current.flags.png} alt={current.flags.alt} />
-                            </figure>
-                            <div className="card-body group-hover/country:bg-primary">
-                                <h2 className="card-title ">
-                                    <p className="group-hover/country:text-base-100">{current.name.common}</p>
-                                    {current.continents.map((currentContinent, index) => <div key={`${currentContinent}-${index}`} className={`badge badge-outline ${getContinentColor(currentContinent)}`}>
-                                        {
-                                            /* {currentContinent} */
-                                        }
-                                    </div>)}
-                                    <div>
+            {
+                visibleResults.length > 0 ?
+                    <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-20 ${visibleResults.length > 5 ? "" : visibleResults.length > 3 ? "mb-0 lg:mb-[20rem]" : "mb-0 md:mb-[20rem] lg:mb-[20rem] "}`}>
+                        {/* shuffle( */visibleResults/* ) */.map((current: CountryInfo) => {
+                            return (
+                                <label
+                                    key={`${current.name.official}-${current.area}`}
+                                    htmlFor="my-modal-countrySelected"
+                                    onClick={() => setCountrySelected(current)}
+                                    className="card rounded-md bg-base-100 shadow-xl h-full group/country cursor-pointer"
+                                >
+                                    <figure className="w-full h-44 object-contain">
+                                        <img className="w-full h-full object-cover" src={current.flags.png} alt={current.flags.alt} />
+                                    </figure>
+                                    <div className="card-body group-hover/country:bg-primary">
+                                        <h2 className="card-title ">
+                                            <p className="group-hover/country:text-base-100">{current.name.common}</p>
+                                            {current.continents.map((currentContinent, index) => {
+                                                return (
+                                                    <div key={`${currentContinent}-${index}`} className={`badge badge-outline ${getContinentColor(currentContinent)}`}>
+                                                        {currentContinent.slice(0, 3).toUpperCase()}
+                                                    </div>
+                                                )
+                                            })}
+                                            {/* <div>
 
+                                    </div> */}
+                                        </h2>
+                                        {
+                                            /* <p>{current.name.official}</p> */
+                                        }
+                                        {
+                                            /* <div className="card-actions justify-end">
+                                             <div className={`badge badge-outline`}>{current.continents}</div>
+                                            </div> */
+                                        }
                                     </div>
-                                </h2>
-                                {
-                                    /* <p>{current.name.official}</p> */
-                                }
-                                {
-                                    /* <div className="card-actions justify-end">
-                                     <div className={`badge badge-outline`}>{current.continents}</div>
-                                    </div> */
-                                }
-                            </div>
-                        </label>
-                    );
-                })}
-            </div>
+                                </label>
+                            );
+                        })}
+                    </div>
+                    :
+                    <div className="w-full flex justify-center items-center">
+                        <p className="animate-textShadowPopBr text-4xl md:text-5xl font-bold">
+                            No results found
+                        </p>
+                    </div>
+            }
 
             {/* <div className="join w-full flex justify-center">
                 <button
@@ -115,6 +130,7 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
                 {pagination.range.map((currentPage) => {
                     return (
                         <button
+                            key={currentPage}
                             onClick={() => pagination.setPage(currentPage !== 'dots' ? currentPage : 1)}
                             className={`join-item btn btn-primary ${pagination.active === currentPage ? "btn-secondary btn-active" : ""} ${currentPage === 'dots' ? "btn-disabled" : ""}`}>
                             {currentPage === "dots" ? <p className="text-secondary">...</p> : currentPage}

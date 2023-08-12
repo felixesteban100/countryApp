@@ -1,8 +1,15 @@
 import { getContinentColor } from "../functions"
 import { SearchDisplayProps } from "../types"
 import { AiOutlineSearch } from 'react-icons/ai';
+import debounce from "lodash.debounce";
+
 
 function SearchDisplay({ filterByRegion, region, setRegion, byName, setByName }: SearchDisplayProps) {
+  const debounceNameRequest = debounce((nameTyped: string) => {
+    setByName(nameTyped)
+    filterByRegion(region, nameTyped)
+  }, 1000)
+
   return (
     <div className="flex flex-col md:flex-row gap-5 md:justify-between items-center pt-5 md:pt-10">
       <div className="join w-full">
@@ -11,8 +18,7 @@ function SearchDisplay({ filterByRegion, region, setRegion, byName, setByName }:
         </div>
         <input
           onChange={(e) => {
-            setByName(e.target.value)
-            filterByRegion(region, e.target.value)
+            debounceNameRequest(e.target.value)
           }}
           className="input join-item w-full md:w-[50%]"
           placeholder="Search for a country"
