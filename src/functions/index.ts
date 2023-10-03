@@ -46,20 +46,20 @@ export function shuffle(array: CountryInfo[]) {
 
 export function getContinentColor(continent: string) {
     switch (continent) {
-        case "Asia": return "bg-primary text-base-100"
+        case "Asia": return "text-primary"
 
-        case "Oceania": return "bg-secondary text-current"
+        case "Oceania": return "text-secondary"
 
-        case "Europe": return "bg-base-300 text-current"
+        case "Europe": return "text-base-content"
 
-        case "North America": return "bg-error text-white"
+        case "North America": return "text-error"
 
-        case "Antarctica": return "bg-info text-white"
+        case "Antarctica": return "text-info"
 
-        case "South America": return "bg-success text-white"
+        case "South America": return "text-success"
 
-        case "Africa": return "bg-warning text-black"
+        case "Africa": return "text-warning"
 
-        default : return 'bg-base-100 text-current'
+        default : return 'text-base-content'
     }
 }

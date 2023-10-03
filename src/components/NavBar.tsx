@@ -1,7 +1,7 @@
 
 function NavBar() {
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 h-[7vh]">
             <div className="mx-auto w-[80%] flex flex-row gap-10">
                 <div className="flex gap-2 items-center">
                     <div className="flex-none">

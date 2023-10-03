@@ -59,24 +59,27 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
     // const lastPage = pagination.range[pagination.range.length - 1]
 
     return (
-        <>
+        <div className="h-[85%] flex flex-col gap-0 md:gap-10">
             {
                 visibleResults.length > 0 ?
-                    <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-20 ${visibleResults.length > 5 ? "" : visibleResults.length > 3 ? "mb-0 lg:mb-[20rem]" : "mb-0 md:mb-[20rem] lg:mb-[20rem] "}`}>
+                    <div
+                        // className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center items-center gap-20 ${visibleResults.length > 5 ? "" : visibleResults.length > 3 ? "mb-0 lg:mb-[20rem]" : "mb-0 md:mb-[20rem] lg:mb-[20rem] "}`}
+                        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-start items-start gap-0 md:gap-20 min-h-[65vh]`}
+                    >
                         {/* shuffle( */visibleResults/* ) */.map((current: CountryInfo) => {
                             return (
                                 <label
                                     key={`${current.name.official}-${current.area}`}
                                     htmlFor="my-modal-countrySelected"
                                     onClick={() => setCountrySelected(current)}
-                                    className="card rounded-md bg-base-100 shadow-xl h-full group/country cursor-pointer"
+                                    className="card rounded-md bg-base-100 shadow-xl h-full group/country cursor-pointer max-h-[15rem]"
                                 >
                                     <figure className="w-full h-44 object-contain">
                                         <img className="w-full h-full object-cover" src={current.flags.png} alt={current.flags.alt} />
                                     </figure>
-                                    <div className="card-body group-hover/country:bg-primary">
+                                    <div className="card-body group-hover/country:bg-primary group-hover/country:text-primary-content">
                                         <h2 className="card-title ">
-                                            <p className="group-hover/country:text-base-100">{current.name.common}</p>
+                                            <p /* className="group-hover/country:text-base-100" */>{current.name.common}</p>
                                             {current.continents.map((currentContinent, index) => {
                                                 return (
                                                     <div key={`${currentContinent}-${index}`} className={`badge badge-outline ${getContinentColor(currentContinent)}`}>
@@ -125,18 +128,38 @@ export function CountriesDisplay({ countries, setCountrySelected }: CountriesDis
                 </button>
             </div> */}
 
-            <div className="join w-full flex justify-center">
+            {/* <div className="join w-full flex justify-center">
                 {pagination.range.map((currentPage) => {
                     return (
                         <button
                             key={currentPage}
                             onClick={() => pagination.setPage(currentPage !== 'dots' ? currentPage : 1)}
-                            className={`join-item btn btn-primary ${pagination.active === currentPage ? "btn-secondary btn-active" : ""} ${currentPage === 'dots' ? "btn-disabled" : ""}`}>
-                            {currentPage === "dots" ? <p className="text-secondary">...</p> : currentPage}
+                            className={`join-item btn btn-primary ${pagination.active === currentPage ? "btn-primary btn-active" : ""} ${currentPage === 'dots' ? "btn-disabled" : ""}`}>
+                            {currentPage === "dots" ? <p className="text-primary-content">...</p> : currentPage}
                         </button>
                     )
                 })}
-            </div>
-        </>
+            </div> */}
+            {
+                pagination.range.length > 1 ?
+                    <div className="join w-full flex justify-center">
+                        <button onClick={() => pagination.setPage(pagination.active - 1)} className={`join-item btn btn-primary text-xl -pt-2 ${1 === pagination.active ? "btn-disabled" : ""}`}>«</button>
+                        {pagination.range.map((currentPage, index) => {
+                            return (
+                                <button
+                                    // data-test={currentPage === 'dots' ? "paginationBtnDisabled" : `paginationBtn-${index}`}
+                                    key={`${currentPage}-${index}`}
+                                    onClick={() => pagination.setPage(currentPage !== 'dots' ? currentPage : 1)}
+                                    className={`join-item btn btn-primary ${pagination.active === currentPage ? "btn-active" : ""} ${currentPage === 'dots' ? "btn-disabled" : ""}`}>
+                                    {currentPage === "dots" ? <p className="text-primary">...</p> : currentPage}
+                                </button>
+                            )
+                        })}
+                        <button onClick={() => pagination.setPage(pagination.active + 1)} className={`join-item btn btn-primary text-xl -pt-2 ${pagination.range.length === pagination.active ? "btn-disabled" : ""}`}>»</button>
+                    </div>
+                    :
+                    <></>
+            }
+        </div>
     );
 }

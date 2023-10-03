@@ -127,7 +127,7 @@ function App() {
                 countrySelected={countrySelected}
               />
 
-              <div className="min-h-[86vh] w-full bg-base-300 ">
+              <div className="min-h-[90vh] w-full bg-base-300 ">
                 <div className="mx-auto w-[80%] flex flex-col gap-10 pb-10">
                   <SearchDisplay
                     filterByRegion={filterByRegion}
@@ -144,7 +144,7 @@ function App() {
               </div>
             </>
       }
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
