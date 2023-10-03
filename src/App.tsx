@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar"
 import { CountryInfo } from './types';
 import { CountriesDisplay } from "./components/CountriesDisplay";
 import SearchDisplay from "./components/SearchDisplay";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import Drawer from "./components/Drawer";
 import ModalContrySelected from "./components/ModalContrySelected";
 
